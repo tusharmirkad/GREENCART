@@ -15,7 +15,7 @@ import { stripeWebhooks } from './controllers/orderController.js';
 const app = express() ;
 const port = process.env.PORT || 4000;
 
-app.post('/webhook/stripe', express.raw({type: 'application/json'}), stripeWebhooks) ;
+app.post('/stripe', express.raw({type: 'application/json'}), stripeWebhooks) ;
 
 //Allow multiple origins
 const allowedOrigins = ['http://localhost:5173/'] ;
