@@ -18,14 +18,14 @@ const port = process.env.PORT || 4000;
 app.post('/stripe', express.raw({type: 'application/json'}), stripeWebhooks) ;
 
 //Allow multiple origins
-const allowedOrigins = ['http://localhost:5173/'] ;
+const allowedOrigins = ['http://localhost:5173/', 'https://greencart-flax.vercel.app'] ;
 
 //Middleware Configuration
 app.use(express.json()) ;
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()) ;
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: allowedOrigins,
     credentials: true,
 }));
 
