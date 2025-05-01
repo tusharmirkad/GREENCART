@@ -161,18 +161,6 @@ export const stripeWebhooks = async(req, res) => {
             }
         }
 
-        case "checkout.session.completed": {
-            const session = event.data.object;
-            const { orderId, userId } = session.metadata;
-        
-            // ✅ Mark order as paid
-            await Order.findByIdAndUpdate(orderId, { isPaid: true });
-        
-            // ✅ Clear user cart
-            await User.findByIdAndUpdate(userId, { cartItems: {} });
-        
-            return res.json({ received: true });
-        }
 
         case "payment_intent.payment_failed": {
             const paymentIntent = event.data.object ;
