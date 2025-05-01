@@ -13,25 +13,25 @@ import orderRouter from './routes/orderRoute.js';
 import { stripeWebhooks } from './controllers/orderController.js';
 
 const app = express() ;
-app.use(express.json()) ;
-app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 4000;
 
-await connectDB() ;
-await connectCloudinary() ;
+app.post('/webhook/stripe', express.raw({type: 'application/json'}), stripeWebhooks) ;
 
 //Allow multiple origins
 const allowedOrigins = ['http://localhost:5173/'] ;
 
-app.post('/stripe', express.raw({type: 'application/json'}), stripeWebhooks) ;
-
 //Middleware Configuration
+app.use(express.json()) ;
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()) ;
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true,
 }));
 
+
+await connectDB() ;
+await connectCloudinary() ;
 
 
 app.get('/', (req, res) =>{

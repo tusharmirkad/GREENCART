@@ -37,7 +37,8 @@ export const AppContextProvider = ({ children }) => {
   //fetch user auth status, user data and cart items
   const fetchUser = async (req, res) => {
     try {
-      const { data } = await axios.post("/api/user/is-auth", {userId: user._id}, {
+      const payload = user?. _id ? { userId: user._id } : {};
+      const { data } = await axios.post("/api/user/is-auth", payload, {
         withCredentials: true,
       });
       if (data.success) {
@@ -45,7 +46,7 @@ export const AppContextProvider = ({ children }) => {
         setCartItems(data.user.cartItems);
       }
     } catch (err) {
-      setUser(null);
+      console.log("Auth error:", err.message);
     }
   };
 
