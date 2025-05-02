@@ -79,7 +79,7 @@ export const AppContextProvider = ({ children }) => {
       setCartItems(cartData);
       toast.success("Added To Cart");
     }else{
-      toast.error("Please log in to add items to your cart.");
+      toast.error("Login to add to cart..");
     }
   };
 

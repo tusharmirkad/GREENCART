@@ -3,7 +3,7 @@ import { assets } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 
 const ProductCard = ({product}) => {
-  const {currency, addToCart, removeFromCart, cartItems, navigate} = useAppContext();
+  const {currency, addToCart, removeFromCart, cartItems, navigate, user, setShowUserLogin} = useAppContext();
 
   return product && (
     <div className="px-2">
@@ -40,7 +40,7 @@ const ProductCard = ({product}) => {
             {!cartItems[product._id] ? (
               <button
                 className="flex cursor-pointer items-center justify-center gap-1 bg-primary/10 border border-primary/40 md:w-[80px] w-[64px] h-[34px] rounded "
-                onClick={() => addToCart(product._id)}
+                onClick={() => {user ? addToCart(product._id) : setShowUserLogin(true)}}
               >
                 <img src={assets.cart_icon} alt="cart_icon" />
                 Add
