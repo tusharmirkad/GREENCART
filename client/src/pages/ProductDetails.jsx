@@ -23,7 +23,7 @@ const ProductDetails = () => {
     }, [products])
 
     useEffect(() => {
-        setThumbnail(product?.image[0] ? product.image : null)
+        setThumbnail(product?.image[0] ? product.image[0] : null)
     },[product])
 
     return product && (
@@ -86,7 +86,6 @@ const ProductDetails = () => {
                             }else{
                                 setShowUserLogin(true) ;
                             }
-                            
                             }} className="w-full py-3.5 cursor-pointer font-medium bg-primary text-white hover:bg-primary-dull transition" >
                             Buy now
                         </button>
