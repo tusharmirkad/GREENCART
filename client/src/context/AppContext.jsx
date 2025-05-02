@@ -37,7 +37,7 @@ export const AppContextProvider = ({ children }) => {
   //fetch user auth status, user data and cart items
   const fetchUser = async (req, res) => {
     try {
-      const payload = user?. _id ? { userId: user._id } : {};
+      const payload = user?._id ? { userId: user._id } : {};
       const { data } = await axios.post("/api/user/is-auth", payload, {
         withCredentials: true,
       });
@@ -66,18 +66,21 @@ export const AppContextProvider = ({ children }) => {
   };
 
   // add product to cart
-  const addToCart = (itemId) => {   
+  const addToCart = (itemId) => {
+    if (user) {
+      let cartData = structuredClone(cartItems);
 
-    let cartData = structuredClone(cartItems);
+      if (cartData[itemId]) {
+        cartData[itemId] += 1;
+      } else {
+        cartData[itemId] = 1;
+      }
 
-    if (cartData[itemId]) {
-      cartData[itemId] += 1;
-    } else {
-      cartData[itemId] = 1;
+      setCartItems(cartData);
+      toast.success("Added To Cart");
+    }else{
+      toast.error("Please log in to add items to your cart.");
     }
-
-    setCartItems(cartData);
-    toast.success("Added To Cart");
   };
 
   // update cart item quantity
@@ -98,7 +101,7 @@ export const AppContextProvider = ({ children }) => {
         delete cartData[itemId];
       }
     }
-    
+
     toast.success("Removed From Cart");
     setCartItems(cartData);
   };
@@ -172,7 +175,7 @@ export const AppContextProvider = ({ children }) => {
     axios,
     fetchSeller,
     fetchProducts,
-    setCartItems
+    setCartItems,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
